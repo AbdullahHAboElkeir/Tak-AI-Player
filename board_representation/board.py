@@ -24,8 +24,9 @@ class Piece:
 @dataclass
 class Player:
     color: PlayerColor
-    stones_remaining: int = 21
+    stones_remaining: int = 20
     capstones_remaining: int = 1
+    opening_stone_remaining: int = 1
 
     def has_stones(self) -> bool:
         return self.stones_remaining > 0
@@ -33,10 +34,19 @@ class Player:
     def has_capstone(self) -> bool:
         return self.capstones_remaining > 0
 
+    def has_opening_stone(self):
+        return self.opening_stone_remaining > 0
+
     def use_stone(self) -> bool:
         if self.stones_remaining <= 0:
             return False
         self.stones_remaining -= 1
+        return True
+
+    def use_opening_stone(self) -> bool:
+        if self.opening_stone_remaining <= 0:
+            return False
+        self.opening_stone_remaining -= 1
         return True
 
     def use_capstone(self) -> bool:
