@@ -234,6 +234,7 @@ class GameState:
                     color=player.color,
                     stones_remaining=player.stones_remaining,
                     capstones_remaining=player.capstones_remaining
+                    opening_stone_remaining=player.opening_stone_remaining
                 )
                 for color, player in self.players.items()
             },
