@@ -111,10 +111,12 @@ def test_invalid_board_size_type():
 def test_player_inventory():
     player = Player(PlayerColor.WHITE)
 
-    assert player.stones_remaining == 21
+    assert player.stones_remaining == 20
+    assert player.opening_stone_remaining == 1
     assert player.capstones_remaining == 1
     assert player.use_stone()
-    assert player.stones_remaining == 20
+    assert player.stones_remaining == 19
+    assert player.opening_stone_remaining == 1
     assert player.use_capstone()
     assert player.capstones_remaining == 0
     assert not player.use_capstone()
@@ -126,9 +128,14 @@ def test_clone_independent_inventory():
 
     copied.players[PlayerColor.WHITE].use_stone()
 
-    assert game.players[PlayerColor.WHITE].stones_remaining == 21
-    assert copied.players[PlayerColor.WHITE].stones_remaining == 20
+    assert game.players[PlayerColor.WHITE].stones_remaining == 20
+    assert copied.players[PlayerColor.WHITE].stones_remaining == 19
 
+def test_clone_preserves_opening_stone_inventory():
+    game = GameState()
+    game.players[PlayerColor.WHITE].use_opening_stone()
+    copied = game.clone()
+    assert copied.players[PlayerColor.WHITE].opening_stone_remaining == 0
 
 def test_remove_multiple_pieces():
     board = Board()
